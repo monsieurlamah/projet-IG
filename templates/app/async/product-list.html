@@ -1,0 +1,45 @@
+{% load humanize %}
+{% load static %}
+{% for product in products %}
+                                
+<div class="col-6 col-sm-4 col-md-3 col-xl-5col">
+    <div class="product-default inner-quickview inner-icon">
+        <figure>
+            <a href="{% url 'app-product-detail' product.pid %}">
+                <img src="{{product.image.url}}" width="273"
+                    height="273" alt="productr" />
+            </a>
+            <div class="label-group">
+                <!-- <div class="product-label label-hot">HOT</div> -->
+                <div class="product-label label-sale">-{{product.get_percentage|floatformat:0}}%</div>
+            </div>
+            <div class="btn-icon-group">
+                <a href="#" class="btn-icon btn-add-cart product-type-simple"><i
+                        class="icon-shopping-cart"></i></a>
+            </div>
+            <a href="ajax/product-quick-view.html" class="btn-quickview"
+                title="Quick View">Ajouter au panier</a>
+        </figure>
+        <div class="product-details">
+            <div class="category-wrap">
+                <div class="category-list">
+                   <p class="product-category">{{product.category.title}}</p>
+                </div>
+            </div>
+            <h3 class="product-title">
+                <a href="{% url 'app-product-detail' product.pid %}">{{product.title}}</a>
+            </h3>
+            <div class="ratings-container">
+                <div class="product-ratings">
+                    <span class="ratings" style="width:100%"></span><!-- End .ratings -->
+                    <span class="tooltiptext tooltip-top"></span>
+                </div><!-- End .product-ratings -->
+            </div><!-- End .product-container -->
+            <div class="price-box">
+               <span class="product-price" style="font-size: 14px;">{{product.old_price|intcomma}} GNF</span>
+               <span class="old-price" style="font-size: 14px;">{{product.price|intcomma}} GNF</span>
+            </div><!-- End .price-box -->
+        </div><!-- End .product-details -->
+    </div>
+</div>
+{% endfor %}

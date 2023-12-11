@@ -1,0 +1,185 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+    <main class="main">
+        <div class="home-slider slide-animate owl-carousel owl-theme show-nav-hover nav-big">
+            <div class="home-slide home-slide1 banner d-flex align-items-center">
+                <img class="slide-bg" src="{% static 'assets/images/demoes/demo3/slider/slide1.jpg' %}"
+                    style="background-color: #ecc;" alt="home banner">
+                <div class="banner-layer appear-animate" data-animation-name="fadeInUpShorter">
+                    <h2>Winter Fashion Trends</h2>
+                    <h3 class="text-uppercase mb-0">Get up to 30% off</h3>
+                    <h4 class="m-b-4">on Jackets</h4>
+
+                    <h5 class="text-uppercase">Starting at<span
+                            class="coupon-sale-text"><sup>$</sup>199<sup>99</sup></span></h5>
+                    <a href="demo3-shop.html" class="btn btn-dark btn-xl" role="button">Shop Now</a>
+                </div><!-- End .banner-layer -->
+            </div><!-- End .home-slide -->
+
+            <div class="home-slide home-slide2 banner d-flex align-items-center">
+                <img class="slide-bg" src="{% static 'assets/images/demoes/demo3/slider/slide2.jpg' %}"
+                    style="background-color: #bfcec9;" alt="home banner">
+                <div class="banner-layer appear-animate" data-animation-name="fadeInUpShorter">
+                    <h2>New Season Hats </h2>
+                    <h3 class="text-uppercase rotated-upto-text mb-0"><small>Up to</small>20% off</h3>
+
+                    <hr class="short-thick-divider mb-sm-0 mb-1">
+
+                    <h5 class="text-uppercase d-inline-block mb-2 mb-sm-0">Starting at <span>$<em>19</em>99</span>
+                    </h5>
+                    <a href="demo3-shop.html" class="btn btn-dark btn-xl btn-icon-right" role="button">Shop Now <i
+                            class="fas fa-long-arrow-alt-right"></i></a>
+                </div><!-- End .banner-layer -->
+            </div><!-- End .home-slide -->
+        </div><!-- End .home-slider -->
+
+        <section class="container" id="category">
+            <h2 class="section-title ls-n-15 text-center pt-2 m-b-4">ACHETER PAR CATÉGORIE</h2>
+
+            <div class="owl-carousel owl-theme nav-image-center show-nav-hover nav-outer cats-slider appear-animate"
+                data-animation-name="fadeInUpShorter" data-animation-delay="200" data-animation-duration="1000">
+                
+                {% if categories %}
+                
+                {% for category in categories %}
+                <div class="product-category">
+                    <a href="{% url 'app-category-product' category.cid %}">
+                        <figure>
+                            <img src="{{category.image.url}}" width="273" height="273"
+                                alt="{{category.title}}" />
+                        </figure>
+                        <div class="category-content">
+                            <h3>{{category.title}}</h3>
+                            <span><mark class="count">{{category.product.count}}</mark> produit{{category.product.count|pluralize}}</span>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+                {% endif %}
+                    
+                
+            </div>
+        </section>
+        <section class="container pb-3 mb-1">
+            <h2 class="section-title ls-n-15 text-center pb-2 m-b-4">Produits populaires</h2>
+
+            <div class="row py-4">
+                
+                {% if products %}
+                 
+                {% for product in products %}        
+                <div class="col-6 col-sm-4 col-md-3 col-xl-2 appear-animate" data-animation-name="fadeIn"
+                    data-animation-delay="300" data-animation-duration="1000">
+                    <div class="product-default inner-quickview inner-icon">
+                        <figure>
+                            <a href="{% url 'app-product-detail' product.pid %}">
+                                <img src="{{product.image.url}}" width="273"
+                                    height="273" alt="productr" />
+                            </a>
+                            <div class="label-group">
+                                <!-- <div class="product-label label-hot">HOT</div> -->
+                                <div class="product-label label-sale">-{{product.get_percentage|floatformat:0}}%</div>
+                            </div>
+                            <div class="btn-icon-group">
+                                <a href="#" class="btn-icon btn-add-cart product-type-simple"><i
+                                        class="icon-shopping-cart"></i></a>
+                            </div>
+                            <a href="" class="btn-quickview" title="Ajouter au panier">Ajouter au panier</a>
+                        </figure>
+                        <div class="product-details">
+                            <div class="category-wrap">
+                                <div class="category-list">
+                                    <p class="product-category">{{product.category.title}}</p>
+                                </div>
+                            </div>
+                            <h3 class="product-title">
+                                <a href="{% url 'app-product-detail' product.pid %}">{{product.title}}</a>
+                            </h3>
+                            <div class="ratings-container">
+                                <div class="product-ratings">
+                                    <span class="ratings" style="width:100%"></span><!-- End .ratings -->
+                                    <span class="tooltiptext tooltip-top"></span>
+                                </div><!-- End .product-ratings -->
+                            </div><!-- End .product-container -->
+                            <div class="price-box">
+                                <span class="product-price" style="font-size: 14px;">{{product.old_price|intcomma}} GNF</span>
+                                <span class="old-price" style="font-size: 14px;">{{product.price|intcomma}} GNF</span>
+                            </div><!-- End .price-box -->
+                        </div><!-- End .product-details -->
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+                    
+          
+            </div>
+
+            <hr class="mt-3 mb-6">
+
+            <div class="row feature-boxes-container pt-2">
+                <div class="col-sm-6 col-lg-3 appear-animate" data-animation-name="fadeInRightShorter"
+                    data-animation-delay="300" data-animation-duration="1000">
+                    <div class="feature-box feature-box-simple text-center">
+                        <i class="sicon-earphones-alt"></i>
+
+                        <div class="feature-box-content p-0">
+                            <h3 class="text-uppercase">Customer Support</h3>
+                            <h5>Need Assistence?</h5>
+
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nec vestibulum magna,
+                                et dapibus lacus. Lorem ipsum dolor sit amet.</p>
+                        </div><!-- End .feature-box-content -->
+                    </div><!-- End .feature-box -->
+                </div><!-- End .col-lg-3 -->
+
+                <div class="col-sm-6 col-lg-3 appear-animate" data-animation-name="fadeInRightShorter"
+                    data-animation-delay="100" data-animation-duration="1000">
+                    <div class="feature-box feature-box-simple text-center">
+                        <i class="sicon-credit-card"></i>
+
+                        <div class="feature-box-content p-0">
+                            <h3 class="text-uppercase">Secured Payment</h3>
+                            <h5>Safe & Fast</h5>
+
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nec vestibulum magna,
+                                et dapibus lacus. Lorem ipsum dolor sit amet.</p>
+                        </div><!-- End .feature-box-content -->
+                    </div><!-- End .feature-box -->
+                </div><!-- End .col-lg-3 -->
+
+                <div class="col-sm-6 col-lg-3 appear-animate" data-animation-name="fadeInLeftShorter"
+                    data-animation-delay="100" data-animation-duration="1000">
+                    <div class="feature-box feature-box-simple text-center">
+                        <i class="sicon-action-undo"></i>
+
+                        <div class="feature-box-content p-0">
+                            <h3 class="text-uppercase">Free Returns</h3>
+                            <h5>Easy & Free</h5>
+
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nec vestibulum magna,
+                                et dapibus lacus. Lorem ipsum dolor sit amet.</p>
+                        </div><!-- End .feature-box-content -->
+                    </div><!-- End .feature-box -->
+                </div><!-- End .col-lg-3 -->
+
+                <div class="col-sm-6 col-lg-3 appear-animate" data-animation-name="fadeInLeftShorter"
+                    data-animation-delay="300" data-animation-duration="1000">
+                    <div class="feature-box feature-box-simple text-center">
+                        <i class="icon-shipping"></i>
+
+                        <div class="feature-box-content p-0">
+                            <h3 class="text-uppercase">Free Shipping</h3>
+                            <h5>Orders Over $99</h5>
+
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nec vestibulum magna,
+                                et dapibus lacus. Lorem ipsum dolor sit amet.</p>
+                        </div><!-- End .feature-box-content -->
+                    </div><!-- End .feature-box -->
+                </div><!-- End .col-lg-3 -->
+            </div><!-- End .row .feature-boxes-container-->
+        </section>
+    </main><!-- End .main -->
+{% endblock content %}
+       

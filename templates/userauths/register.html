@@ -1,0 +1,103 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% block content %}
+
+        <main class="main about">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'app-home' %}">Accueil</a></li>
+                        <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Inscription</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav>
+
+            <div class="container">
+                <div class="page-header pt-3 bg-transparent">
+                    <div class="container text-left">
+                        <h2 class="font4 text-uppercase text-center">Bienvenue chez Informatic Guinée</h2>
+                    </div><!-- End .container -->
+                </div><!-- End .page-header -->
+                {% if form.errors %}
+                <div class="alert alert-danger">
+                    <strong>Il y a des erreurs dans le formulaire :</strong>
+                    <ul>
+                        {% for field, errors in form.errors.items %}
+                            {% for error in errors %}
+                                <li>{{ field }}: {{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% else %}
+                {% endif %}
+                <div class="container">
+                    <div class="row row-bg">
+                        <div class="col-md-6">
+                            
+								<div class="heading mb-1">
+									<h2 class="title">Inscription</h2>
+								</div>
+
+								<form method="POST">
+                                    {% csrf_token %}
+									<label for="register-email">
+										Nom d'utilisateur
+										<span class="required">*</span>
+									</label>
+									<div class="form-group">
+                                        {{form.username}}
+                                        <small class="text-danger">{{ form.username.errors }}</small>
+                                    </div>
+
+                                    <label for="register-email">
+										Adresse E-mail
+										<span class="required">*</span>
+									</label>
+									<div class="form-group">
+                                        {{form.email}}
+                                        <small class="text-danger">{{ form.email.errors }}</small>
+                                    </div>
+
+									<label for="register-password">
+										Mot de passe
+										<span class="required">*</span>
+									</label>
+                                        <div class="form-group">
+                                            {{form.password1}}
+                                            <small class="text-danger">{{ form.password1.errors }}</small>
+                                        </div>
+                                        <label for="register-password">
+                                            Confirmation du mot de passe
+                                            <span class="required">*</span>
+                                        </label>
+                                       <div class="form-group">
+                                        {{form.password2}}
+                                        <small class="text-danger">{{ form.password2.errors }}</small>
+                                       </div>
+
+									<div class="form-footer mb-2">
+										<button type="submit" class="btn btn-dark btn-md w-100 mr-0">
+											S'inscrire
+										</button>
+									</div>
+								</form>
+                                <p class="text-center">Déjà inscrit ? <a href="{% url 'userauths-login' %}"><u>Se connecter</u></a></p>
+                        </div><!-- End .col-md-6 -->
+
+                        <div class="col-md-6">
+                            <div class="">
+                                <img src="{% static 'assets/images/demoes/demo3/auth/register.png' %}" alt="">
+                            </div>
+
+                        </div><!-- End .col-md-6 -->
+                    </div><!-- End .row -->
+                </div><!-- End .container -->
+
+
+                <div class="mb-3"></div><!-- margin -->
+            </div>
+        </main><!-- End .main -->
+
+{% endblock content %}

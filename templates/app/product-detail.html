@@ -1,0 +1,473 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+    <main class="main">
+        <nav aria-label="breadcrumb" class="breadcrumb-nav">
+            <div class="container">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'app-home' %}"><i class="icon-home"></i></a></li>
+                    <li class="breadcrumb-item"><a href="#">{{product.title}}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Detail</li>
+                </ol>
+            </div><!-- End .container -->
+        </nav>
+        <div class="container pt-1">
+            <div class="row">
+                <div class="col-lg-9 main-content">
+                    <div class="product-single-container product-single-default">
+                        <div class="cart-message d-none">
+                            <strong class="single-cart-notice">{{product.title}}</strong>
+                            <span>has been added to your cart.</span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 product-single-gallery">
+                                <div class="product-slider-container">
+                                    <div class="label-group">
+                                        <!-- <div class="product-label label-hot">HOT</div> -->
+                                        <!---->
+                                        <div class="product-label label-sale">
+                                            -{{product.get_percentage|floatformat:0}}%
+                                        </div>
+                                    </div>
+
+                                    <div class="product-single-carousel owl-carousel owl-theme show-nav-hover">
+                                        <div class="product-item">
+                                            <img class="product-single-image"
+                                                src="{{product.image.url}}"
+                                                data-zoom-image="{{product.image.url}}"
+                                                width="468" height="468" alt="{{product.title}}" />
+                                        </div>
+                                        
+                                        {% for product in p_images %}
+                                        <div class="product-item">
+                                            <img class="product-single-image"
+                                                src="{{product.images.url}}"
+                                                data-zoom-image="{{product.images.url}}"
+                                                width="468" height="468" alt="{{product.title}}" />
+                                        </div>
+                                        {% endfor %}  
+                                    </div>
+                                    <!-- End .product-single-carousel -->
+                                    <span class="prod-full-screen">
+                                        <i class="icon-plus"></i>
+                                    </span>
+                                </div>
+
+                                <div class="prod-thumbnail owl-dots">
+                                    {% for product in p_images %}
+                                    <div class="owl-dot">
+                                        <img src="{{product.images.url}}" width="110"
+                                            height="110" alt="product-thumbnail" />
+                                    </div>
+                                    {% endfor %} 
+                                </div>
+                            </div><!-- End .product-single-gallery -->
+
+                            <div class="col-md-6 product-single-details">
+                                <h1 class="product-title">{{product.title}}</h1>
+
+                                <div class="product-nav">
+                                    <div class="product-prev">
+                                        <a href="#">
+                                            <span class="product-link"></span>
+
+                                            <span class="product-popup">
+                                                <span class="box-content">
+                                                    <img alt="product" width="150" height="150"
+                                                        src="{{product.image.url}}"
+                                                        style="padding-top: 0px;">
+
+                                                    <span>{{product.title}}</span>
+                                                </span>
+                                            </span>
+                                        </a>
+                                    </div>
+
+                                    <div class="product-next">
+                                        <a href="#">
+                                            <span class="product-link"></span>
+
+                                            <span class="product-popup">
+                                                <span class="box-content">
+                                                    <img alt="product" width="150" height="150"
+                                                        src="{{product.image.url}}"
+                                                        style="padding-top: 0px;">
+
+                                                    <span>{{product.title}}</span>
+                                                </span>
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="ratings-container">
+                                    <div class="product-ratings">
+                                        <span class="ratings" style="width:60%"></span><!-- End .ratings -->
+                                        <span class="tooltiptext tooltip-top"></span>
+                                    </div><!-- End .product-ratings -->
+
+                                    <a href="#" class="rating-link">( 6 Reviews )</a>
+                                </div><!-- End .ratings-container -->
+
+                                <hr class="short-divider">
+
+                                <div class="price-box">
+                                    <span class="product-price" style="font-size: 30px;">{{product.price|intcomma}} GNF</span>
+                                    <span class="product-price old-price" style="font-size: 30px;">{{product.old_price|intcomma}} GNF</span>
+                                </div><!-- End .price-box -->
+
+                                <div class="product-desc">
+                                    <p>
+                                      {{product.description|safe|truncatechars:50}}
+                                    </p>
+                                </div><!-- End .product-desc -->
+
+                                <ul class="single-info-list">
+                                    <!---->
+                                    <li>
+                                        SKU:
+                                        <strong>{{product.sku}}</strong>
+                                    </li>
+
+                                    <li>
+                                        CATÉGORIE:
+                                        <strong><a href="#" class="product-category">{{product.category.title}}</a></strong>
+                                    </li>
+
+                                    <li>
+                                        TAGs:
+                                        {% for tag in product.tags.all %}
+                                        <strong><a href="{% url 'app-tags' tag.slug %}" class="product-category">#{{tag.name}}</a></strong>,
+                                        {% endfor %}
+                                            
+                                    </li>
+                                </ul>
+
+                                <div class="product-filters-container">
+                                    <!-- <div class="product-single-filter flex-column align-items-start">
+                                        <label>Color:</label>
+                                        <ul class="config-size-list config-color-list config-filter-list">
+                                            <li class=""><a href="javascript:;" class="filter-color border-0"
+                                                    style="background-color: rgb(1, 136, 204);"></a></li>
+                                            <li class=""><a href="javascript:;"
+                                                    class="filter-color border-0 initial disabled"
+                                                    style="background-color: rgb(221, 181, 119);"></a></li>
+                                            <li class=""><a href="javascript:;" class="filter-color border-0"
+                                                    style="background-color: rgb(96, 133, 165);"></a></li>
+                                        </ul>
+                                    </div> -->
+
+                                    <!-- <div class="product-single-filter flex-column align-items-start">
+                                        <label>Size:</label>
+                                        <ul class="config-size-list">
+                                            <li class=""><a href="javascript:;"
+                                                    class="d-flex align-items-center justify-content-center">Medium</a>
+                                            </li>
+                                            <li class=""><a href="javascript:;"
+                                                    class="d-flex align-items-center justify-content-center">Large</a>
+                                            </li>
+                                            <li class=""><a href="javascript:;"
+                                                    class="d-flex align-items-center justify-content-center">Extra
+                                                    Large</a>
+                                            </li>
+                                        </ul>
+                                    </div> -->
+
+                                    <!-- <div class="product-single-filter">
+                                        <a class="font1 text-uppercase clear-btn ml-0" href="#">Clear</a>
+                                    </div> -->
+                                    <!---->
+                                </div>
+
+                                <div class="product-action">
+                                    <!-- <div class="price-box product-filtered-price">
+                                        <del class="old-price"><span>$286.00</span></del>
+                                        <span class="new-price">$245.00</span>
+                                    </div> -->
+
+                                    <div class="product-single-qty">
+                                        <input class="horizontal-quantity form-control" type="text">
+                                    </div><!-- End .product-single-qty -->
+
+                                    <a href="javascript:;" class="btn btn-dark add-cart mr-2"
+                                        title="Add to Cart">Ajouter au panier</a>
+
+                                    <a href="cart.html" class="btn btn-gray view-cart d-none">View cart</a>
+                                </div><!-- End .product-action -->
+
+                                <hr class="divider mb-0 mt-0">
+
+                                <div class="product-single-share mb-2">
+                                    <label class="sr-only">Partager:</label>
+
+                                    <div class="social-icons mr-2">
+                                        <a href="#" class="social-icon social-facebook icon-facebook"
+                                            target="_blank" title="Facebook"></a>
+                                        <a href="#" class="social-icon social-twitter icon-twitter" target="_blank"
+                                            title="Twitter"></a>
+                                        <a href="#" class="social-icon social-linkedin fab fa-linkedin-in"
+                                            target="_blank" title="Linkedin"></a>
+                                        <a href="#" class="social-icon social-gplus fab fa-google-plus-g"
+                                            target="_blank" title="Google +"></a>
+                                        <a href="#" class="social-icon social-mail icon-mail-alt" target="_blank"
+                                            title="Mail"></a>
+                                    </div><!-- End .social-icons -->
+
+                                    <!-- <a href="wishlist.html" class="btn-icon-wish add-wishlist"
+                                        title="Add to Wishlist"><i class="icon-wishlist-2"></i><span>Add to
+                                            Wishlist</span></a> -->
+                                </div><!-- End .product single-share -->
+                            </div><!-- End .product-single-details -->
+                        </div><!-- End .row -->
+                    </div><!-- End .product-single-container -->
+
+                    <div class="product-single-tabs">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="product-tab-desc" data-toggle="tab"
+                                    href="#product-desc-content" role="tab" aria-controls="product-desc-content"
+                                    aria-selected="true">Description</a>
+                            </li>
+
+                            <!-- <li class="nav-item">
+                                <a class="nav-link" id="product-tab-size" data-toggle="tab"
+                                    href="#product-size-content" role="tab" aria-controls="product-size-content"
+                                    aria-selected="true">Size Guide</a>
+                            </li> -->
+
+                            <!-- <li class="nav-item">
+                                <a class="nav-link" id="product-tab-tags" data-toggle="tab"
+                                    href="#product-tags-content" role="tab" aria-controls="product-tags-content"
+                                    aria-selected="false">Additional
+                                    Information</a>
+                            </li> -->
+
+                            <li class="nav-item">
+                                <a class="nav-link" id="product-tab-reviews" data-toggle="tab"
+                                    href="#product-reviews-content" role="tab"
+                                    aria-controls="product-reviews-content" aria-selected="false">Commentaire{{reviews.count|pluralize}} ({{reviews.count}})</a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="product-desc-content" role="tabpanel"
+                                aria-labelledby="product-tab-desc">
+                                <div class="product-desc-content">
+                                    <p>{{product.description|safe}} </p>
+                                </div><!-- End .product-desc-content -->
+                            </div><!-- End .tab-pane -->
+
+                            <div class="tab-pane fade" id="product-reviews-content" role="tabpanel"
+                                aria-labelledby="product-tab-reviews">
+                                <div class="product-reviews-content">
+                                    <h3 class="reviews-title">{{reviews.count}} commentaire{{reviews.count|pluralize}} pour {{product.title}}</h3>
+
+                                  <div class="comment-content-list">
+                                    {% for review in reviews %}
+                                    <div class="comment-list">
+                                        
+                                        <div class="comments">
+                                            <figure class="img-thumbnail">
+                                                <img src="https://cdn-icons-png.flaticon.com/512/6596/6596121.png" alt="{{review.user}}" width="80"
+                                                    height="80">
+                                            </figure>
+
+                                            <div class="comment-block">
+                                                <div class="comment-header">
+                                                    <div class="comment-arrow"></div>
+
+                                                    <div class="ratings-container float-sm-right">
+                                                        <div class="product-ratings">
+                                                            <span class="ratings" style="width:60%"></span>
+                                                            <!-- End .ratings -->
+                                                            <span class="tooltiptext tooltip-top"></span>
+                                                        </div><!-- End .product-ratings -->
+                                                    </div>
+
+                                                    <span class="comment-by">
+                                                        <strong>{{review.user}}</strong> – {{review.date}}
+                                                    </span>
+                                                </div>
+
+                                                <div class="comment-content">
+                                                    <p>{{review.review|safe}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                  </div>
+
+                                    <div class="divider"></div>
+                                  
+                                  {% if make_review == True %}
+                                  
+                                  {% if user.is_authenticated %}                                    
+                                    <div class="add-product-review">
+                                        <h3 class="review-title add-review">Ajouter un commentaire</h3>
+                                        <strong class="text-success" id="review-res"> </strong>
+                                        <form  class="comment-form m-0 hide-comment-form" action="{% url 'app-ajax-add-review' product.pid %}" id="commentForm" method="POST">
+                                            {% csrf_token %}
+                                            <div class="form-group">
+                                                    {{review_form.review}}
+                                            </div><!-- End .form-group -->
+                                            <div class="row">
+                                                <div class="col-md-6 col-xl-12">
+                                                    <div class="form-group">
+                                                            {{review_form.rating}}
+                                                    </div><!-- End .form-group -->
+                                                </div>
+                                            </div>
+                                            <input type="submit" class="btn btn-primary" value="Commenter">
+                                        </form>
+                                    </div><!-- End .add-product-review -->
+                                        
+                                {% endif %}
+                                
+                                {% endif %}
+                                </div><!-- End .product-reviews-content -->
+                            </div><!-- End .tab-pane -->
+                        </div><!-- End .tab-content -->
+                    </div><!-- End .product-single-tabs -->
+                </div><!-- End .main-content -->
+
+                <div class="sidebar-overlay"></div>
+                <div class="sidebar-toggle custom-sidebar-toggle"><i class="fas fa-sliders-h"></i></div>
+                <aside class="sidebar-product col-lg-3 mobile-sidebar">
+                    <div class="sidebar-wrapper">
+                        <div class="widget category-banner pt-0 pb-2 mt-0">
+                            <figure>
+                                <img class="slide-bg" src="{% static 'assets/images/demoes/demo3/banners/banner-sidebar.jpg' %}"
+                                    alt="banner" />
+                            </figure>
+                            <div class="category-slide-content">
+                                <h2 class="m-b-3">Winter Fashion Trends</h2>
+                                <h3 class="text-uppercase ml-0">Up to 30%</h3>
+                                <h4 class="text-uppercase ml-0 mb-1">Off on Jackets</h4>
+                                <h5 class="text-uppercase d-block">Starting at</h5>
+                                <h3 class="coupon-sale-text font2 ml-0 mt-0"><sup>$</sup>199<sup>99</sup></h3>
+                                <a href="demo3-shop.html" class="btn btn-dark btn-xl ml-0" role="button">Shop
+                                    Now</a>
+                            </div><!-- End .category-slide-content -->
+                        </div><!-- End .widget -->
+
+                        <div class="widget widget-featured">
+                            <h3 class="widget-title">En vedette</h3>
+
+                            <div class="widget-body pt-0">
+                                <div class="owl-carousel widget-featured-products">
+                                    <div class="featured-col">
+                                        
+                                        {% for product in product_featured %}
+                                                  
+                                        <div class="product-default left-details product-widget">
+                                            <figure>
+                                                <a href="demo3-product.html">
+                                                    <img src="{{product.image.url}}"
+                                                        width="75" height="75" alt="{{product.title}}" />
+                                                    <img src="{{product.image.url}}"
+                                                        width="75" height="75" alt="{{product.title}}" />
+                                                </a>
+                                            </figure>
+                                            <div class="product-details">
+                                                <h5 class="product-title">
+                                                    <a href="{% url 'app-product-detail' product.pid %}">{{product.title}}</a>
+                                                </h5>
+                                                <div class="ratings-container">
+                                                    <div class="product-ratings">
+                                                        <span class="ratings" style="width:100%"></span>
+                                                        <!-- End .ratings -->
+                                                        <span class="tooltiptext tooltip-top"></span>
+                                                    </div><!-- End .product-ratings -->
+                                                </div><!-- End .ratings-container -->
+                                                <div class="price-box">
+                                                    <span class="product-price">{{product.price|intcomma}} GNF</span>
+                                                </div><!-- End .price-box -->
+                                            </div><!-- End .product-details -->
+                                        </div>
+                                        {% endfor %}
+                                      
+                                      
+                                    </div><!-- End .featured-col -->
+
+                                  
+                                </div><!-- End .widget-featured-slider -->
+                            </div><!-- End .widget-body -->
+                        </div><!-- End .widget -->
+                    </div>
+                </aside><!-- End .col-lg-3 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+
+        <div class="products-section pt-0">
+            <div class="container">
+                <h2>Produits connexes</h2>
+
+                <div class="products-slider owl-carousel owl-theme 5col dots-top dots-small" data-owl-options="{
+                    'dots': true
+                }">
+
+                
+                {% for product in related_product  %}
+                    
+                <div class="product-default inner-quickview inner-icon">
+                    <figure>
+                        <a href="demo3-product.html">
+                            <img src="{{product.image.url}}" width="273"
+                                height="273" alt="productr" />
+                        </a>
+                        <div class="label-group">
+                            <!-- <div class="product-label label-hot">HOT</div> -->
+                            <div class="product-label label-sale">-{{product.get_percentage|floatformat:0}}%</div>
+                        </div>
+                        <div class="btn-icon-group">
+                            <a href="#" class="btn-icon btn-add-cart product-type-simple"><i
+                                    class="icon-shopping-cart"></i></a>
+                        </div>
+                        <a href="ajax/product-quick-view.html" class="btn-quickview" title="Ajouter au panier">Ajouter au panier</a>
+                    </figure>
+                    <div class="product-details">
+                        <div class="category-wrap">
+                            <div class="category-list">
+                                <p class="product-category">{{product.category.title}}</p>
+                            </div>
+                        </div>
+                        <h3 class="product-title">
+                            <a href="demo3-product.html">{{product.title}}</a>
+                        </h3>
+                        <div class="ratings-container">
+                            <div class="product-ratings">
+                                <span class="ratings" style="width:100%"></span><!-- End .ratings -->
+                                <span class="tooltiptext tooltip-top"></span>
+                            </div><!-- End .product-ratings -->
+                        </div><!-- End .product-container -->
+                        <div class="price-box">
+                            <span class="old-price" style="font-size: 14px;">{{product.price|intcomma}} GNF</span>
+                            <span class="product-price" style="font-size: 14px;">{{product.old_price|intcomma}} GNF</span>
+                        </div><!-- End .price-box -->
+                    </div><!-- End .product-details -->
+                </div>
+                {% endfor %}
+
+                </div><!-- End .products-slider -->
+            </div><!-- End .container -->
+        </div><!-- End .products-section -->
+    </main><!-- End .main -->
+    <!-- <script>
+        function addComment(id){
+            fetch(`/ajax-add-review/${id}`,{
+                method:"POST",
+                body:JSON.stringify({
+                    'review':document.getElementById('review').value,
+                })
+            }).then(async(res)=>{
+                console.log(await res.json())
+            })
+        }
+    </script>  -->
+{% endblock content %}
+
+        
