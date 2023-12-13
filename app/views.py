@@ -46,6 +46,7 @@ def category_product_list(request, cid):
         'products':products,
         'categories':categories,
         'brands':brands,
+        'category':category
     }
     return render(request, 'app/category-product.html', context)
 
@@ -133,6 +134,7 @@ def brand_product_list(request, bid):
         'products':products,
         'categories':categories,
         'brands':brands,
+        'brand':brand,
     }
     return render(request, 'app/marque-product.html', context)
 
@@ -143,14 +145,19 @@ def seach_view(request):
         'query':query,
         'products':products,
     }
-    return render(request, 'app/seach.html', context)
+    return render(request, 'app/search.html', context)
 
 
 def filter_product(request):
     categories = request.GET.getlist("category[]")
     brands = request.GET.getlist("brand[]")
     
+    min_price = request.GET["min_price"]
+    max_price = request.GET["max_price"]
+    
     products = Product.objects.filter(product_status="publier").order_by('-id').distinct()
+    products = products.filter(price__gte=min_price)
+    products = products.filter(price__lte=max_price)
     
     if len(categories) > 0:
         products =products.filter(category__id__in=categories).distinct()

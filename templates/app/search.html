@@ -11,8 +11,8 @@
                 <div class="container">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{% url 'app-home' %}">Accueil</a></li>
-                        <li class="breadcrumb-item"><a href="#">Produits</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Marque: {{brand.title}}</li>
+                        <li class="breadcrumb-item"><a>Produits</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{query}}</li>
                     </ol>
                 </div><!-- End .container -->
             </nav>
@@ -210,12 +210,10 @@
                                                 {% endfor %}
                                                     
                                             {% endif %}
-                                                
                                         </ul>
                                     </div><!-- End .widget-body -->
                                 </div><!-- End .collapse -->
                             </div><!-- End .widget -->
-
                             <div class="widget widget-brand">
                                 <h3 class="widget-title">
                                     <a data-toggle="collapse" href="#widget-body-7" role="button" aria-expanded="true"
@@ -226,18 +224,16 @@
                                    
                            
                                    <div class="widget-body pb-0">
-                                    
                                     {% for brand in brands %}
-                                    <ul class="cat-list">
-                                        <li>
-                                            <span style="margin-bottom: 2%;">
-                                                <input class="filter-checkbox" type="checkbox" name="checkbox" data-filter="brand" value="{{brand.id}}">
-                                            </span>
-                                            <a href="{% url 'app-brand-product' brand.bid %}">{{brand}}</a><span class="products-count">({{brand.product.count}})</span>
-                                        </li>
-                                    </ul>
-                                {% endfor %}  
-                               
+                                        <ul class="cat-list">
+                                            <li>
+                                                <span style="margin-bottom: 2%;">
+                                                    <input class="filter-checkbox" type="checkbox" name="checkbox" data-filter="brand" value="{{brand.id}}">
+                                                </span>
+                                                <a href="{% url 'app-brand-product' brand.bid %}">{{brand}}</a><span class="products-count">({{brand.product.count}})</span>
+                                            </li>
+                                        </ul>
+                                    {% endfor %}                               
                                 </div>
                                    
                                     

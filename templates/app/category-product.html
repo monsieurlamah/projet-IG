@@ -8,7 +8,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{% url 'app-home' %}">Accueil</a></li>
                         <li class="breadcrumb-item"><a href="#">Produits</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Tous les produits</li>
+                        <li class="breadcrumb-item active" aria-current="page">Catégorie:{{category.title}}</li>
                     </ol>
                 </div><!-- End .container -->
             </nav>
@@ -95,7 +95,7 @@
                             </div><!-- End .toolbox-right -->
                         </nav>
 
-                        <div class="row">
+                        <div class="row" id="filtered-produit">
                             
                             {% if products %}
                              
@@ -135,8 +135,8 @@
                                              </div><!-- End .product-ratings -->
                                          </div><!-- End .product-container -->
                                          <div class="price-box">
-                                            <span class="product-price" style="font-size: 14px;">{{product.old_price|intcomma}} GNF</span>
-                                            <span class="old-price" style="font-size: 14px;">{{product.price|intcomma}} GNF</span>
+                                            <span class="product-price" style="font-size: 14px;">{{product.price|intcomma}} GNF</span>
+                                            <span class="old-price" style="font-size: 14px;">{{product.old_price|intcomma}} GNF</span>
                                          </div><!-- End .price-box -->
                                      </div><!-- End .product-details -->
                                  </div>
@@ -195,11 +195,9 @@
                                                 {% for category in categories %}
                                                 <li>
                                                     <span style="margin-bottom: 2%;">
-                                                        <input type="checkbox" name="dd" id="">
+                                                        <input class="filter-checkbox" type="checkbox" name="checkbox" data-filter="category" value="{{category.id}}">
                                                     </span>
-                                                    <a href="#widget-category-1" class="collapsed" data-toggle="collapse"
-                                                        role="button" aria-expanded="false"
-                                                        aria-controls="widget-category-1">
+                                                    <a href="{% url 'app-category-product' category.cid %}">
                                                         {{category.title}}<span class="products-count">({{category.product.count}})</span>
                                                        
                                                     </a>
@@ -223,9 +221,14 @@
                                     <div class="widget-body pb-0">
                                         {% for brand in brands %}
                                         <ul class="cat-list">
-                                            <li><a href="{% url 'app-brand-product' brand.bid %}">{{brand}}</a><span class="products-count">({{brand.product.count}})</span></li>
+                                            <li>
+                                                <span style="margin-bottom: 2%;">
+                                                    <input class="filter-checkbox" type="checkbox" name="checkbox" data-filter="brand" value="{{brand.id}}">
+                                                </span>
+                                                <a href="{% url 'app-brand-product' brand.bid %}">{{brand}}</a><span class="products-count">({{brand.product.count}})</span>
+                                            </li>
                                         </ul>
-                                    {% endfor %}
+                                    {% endfor %}  
                                     </div><!-- End .widget-body -->
                                 </div><!-- End .collapse -->
                             </div><!-- End .widget -->

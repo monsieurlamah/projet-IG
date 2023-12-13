@@ -6,6 +6,36 @@
 {% load static %}
 {% load humanize %}
 {% block content %}
+<head>
+    <style>
+        input[type="range"]{
+            -webkit-appearance: none;
+            margin-right: 15px;
+            height: 7px;
+            background:rgba(0, 0, 0, 0.6);
+            border-radius: 5px;
+            background-image: linear-gradient(#000000, #004080);
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
+        input[type="range"]::-webkit-slider-thumb{
+            -webkit-appearance: none;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background:#000000;
+            cursor: ew-resize;
+            box-shadow: 0 0 2px 0 #555;
+            transition: background .3s ease-in-out;
+        }
+        input[type="range"]::-webkit-slider-runnable-track{
+            -webkit-appearance: none;
+            box-shadow: none;
+            border: none;
+            background: transparent;
+        }
+    </style>
+</head>
         <main class="main">
             <nav aria-label="breadcrumb" class="breadcrumb-nav">
                 <div class="container">
@@ -139,8 +169,8 @@
                                              </div><!-- End .product-ratings -->
                                          </div><!-- End .product-container -->
                                          <div class="price-box">
-                                            <span class="product-price" style="font-size: 14px;">{{product.old_price|intcomma}} GNF</span>
-                                            <span class="old-price" style="font-size: 14px;">{{product.price|intcomma}} GNF</span>
+                                            <span class="product-price" style="font-size: 14px;">{{product.price|intcomma}} GNF</span>
+                                            <span class="old-price" style="font-size: 14px;">{{product.old_price|intcomma}} GNF</span>
                                          </div><!-- End .price-box -->
                                      </div><!-- End .product-details -->
                                  </div>
@@ -201,9 +231,7 @@
                                                     <span style="margin-bottom: 2%;">
                                                         <input class="filter-checkbox" type="checkbox" name="checkbox" data-filter="category" value="{{category.id}}">
                                                     </span>
-                                                    <a href="#widget-category-1" class="collapsed" data-toggle="collapse"
-                                                        role="button" aria-expanded="false"
-                                                        aria-controls="widget-category-1">
+                                                    <a href="{% url 'app-category-product' category.cid %}">
                                                         {{category.title}}<span class="products-count">({{category.product.count}})</span>
                                                        
                                                     </a>
@@ -241,6 +269,34 @@
                                    
                                     
                                     <!-- End .widget-body -->
+                                    <div class="widget widget-price">
+                                        <h3 class="widget-title">
+                                            <a data-toggle="collapse" href="#widget-body-3" role="button" aria-expanded="true"
+                                                aria-controls="widget-body-3">Filtrer par prix</a>
+                                        </h3>
+        
+                                        <div class="collapse show" id="widget-body-3">
+                                            <div class="widget-body">
+                                               
+                                                    <div class="price-slider-wrapper">
+                                                        <input value="{{min_max_price.price__min}}" class="slider-range" type="range" id="range" name="range" placeholder="Add Your Price" min="{{min_max_price.price__min}}" max="{{min_max_price.price__max}}" oninput="max_price.value=this.value"> 
+                                                        <!-- <div id="price-slider"></div> -->
+                                                        <!-- End #price-slider -->
+                                                    </div><!-- End .price-slider-wrapper -->
+        
+                                                    <div
+                                                        class="filter-price-action d-flex align-items-center justify-content-between flex-wrap">
+                                                        <div class="filter-price-text">
+                                                            <div class="caption">À partir de : <strong id="slider-ranger-value1" class="text-brand">{{min_max_price.price__min|intcomma}} GNF</strong></div>
+                                                            <div class="caption">À : <strong id="slider-ranger-value2" class="text-brand">{{min_max_price.price__max|intcomma}} GNF</strong></div>
+                                                            <input value="{{min_max_price.price__min}}" class="form-control" type="number" id="max_price" min="{{min_max_price.price__min}}" max="{{min_max_price.price__max}}" placeholder="Prix ​​actuel" onkeyup="range.value=this.value">
+                                                        </div><!-- End .filter-price-text -->
+                                                        <button type="button" id="price-filter-btn" class="btn btn-primary">Filtrer</button>
+                                                    </div><!-- End .filter-price-action -->
+                                               
+                                            </div><!-- End .widget-body -->
+                                        </div><!-- End .collapse -->
+                                    </div><!-- End .widget -->
                                 </div><!-- End .collapse -->
                             </div><!-- End .widget -->
                         </div><!-- End .sidebar-wrapper -->

@@ -88,31 +88,17 @@
                     <div class="header-right">
                         <div class="header-search header-search-popup header-search-category d-none d-sm-block">
                             <a href="#" class="search-toggle" role="button"><i class="icon-magnifier"></i></a>
-                            <form action="#" method="get">
+                            <form action="{% url 'app-search' %}" method="get">
                                 <div class="header-search-wrapper">
                                     <input type="search" class="form-control" name="q" id="q"
-                                        placeholder="I'm searching for..." required="">
-                                    <div class="select-custom">
+                                        placeholder="Je cherche..." required="">
+                                    <!-- <div class="select-custom">
                                         <select id="cat" name="cat">
-                                            <option value="">All Categories</option>
+                                            <option value="">Toutes catégories</option>
                                             <option value="4">Fashion</option>
-                                            <option value="12">- Women</option>
-                                            <option value="13">- Men</option>
-                                            <option value="66">- Jewellery</option>
-                                            <option value="67">- Kids Fashion</option>
-                                            <option value="5">Electronics</option>
-                                            <option value="21">- Smart TVs</option>
-                                            <option value="22">- Cameras</option>
-                                            <option value="63">- Games</option>
-                                            <option value="7">Home &amp; Garden</option>
-                                            <option value="11">Motors</option>
-                                            <option value="31">- Cars and Trucks</option>
-                                            <option value="32">- Motorcycles &amp; Powersports</option>
-                                            <option value="33">- Parts &amp; Accessories</option>
-                                            <option value="34">- Boats</option>
-                                            <option value="57">- Auto Tools &amp; Supplies</option>
+                                   
                                         </select>
-                                    </div><!-- End .select-custom -->
+                                    </div>End .select-custom -->
                                     <button class="btn text-dark icon-magnifier" type="submit"></button>
                                 </div><!-- End .header-search-wrapper -->
                             </form>
@@ -579,6 +565,7 @@
     <!-- Main JS File -->
     <script src="{% static 'assets/js/main.min.js' %}"></script>
     <script src="{% static 'ajax/function.js' %}"></script>
+    <script src="{% static 'assets/js/nouislider.min.js' %}"></script>
 <script>(function(){var js = "window['__CF$cv$params']={r:'82caf1ebbb513153',t:'MTcwMTA5NDEyNS44MjkwMDA='};_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='../../cdn-cgi/challenge-platform/h/g/scripts/jsd/9914b343/main.js',document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script>
 
 </body>
